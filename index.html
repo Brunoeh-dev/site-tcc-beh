@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O Impacto do Treinamento Físico na Saúde Mental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --roxo-1:#1a0933; --roxo-2:#2d0a52; --roxo-3:#3c096c;
+  --roxo-4:#5a189a; --roxo-5:#7b2cbf; --lilas:#c77dff;
+  --lavanda:#e0aaff; --texto:#f5ecff; --suave:#cdb4e8; --brilho:#ff9ee5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Outfit',sans-serif;font-size:1.05rem;line-height:1.8;
+  color:var(--texto);background:var(--roxo-1);
+}
+
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:linear-gradient(120deg,#8d6fb8,#3c096c,#7b2cbf,#a43fc4,#c2418f,#8a2fb8,#4a1580,#10002b,#0d001f);
+  background-size:500% 500%;animation:fluir 16s ease-in-out infinite;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(224,170,255,.22),transparent 40%),
+    radial-gradient(circle at 80% 70%,rgba(255,158,229,.16),transparent 40%);
+  background-size:140% 140%;animation:brilho 16s ease-in-out infinite alternate;
+}
+@keyframes brilho{0%{backgr jound-position:0% 0%}100%{background-position:100% 100%}}
+
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 5vw;background:rgba(26,9,51,.72);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(199,125,255,.25);
+}
+.logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--lavanda);text-decoration:none}
+.logo span{color:var(--brilho)}
+nav{display:flex;gap:8px}
+nav a{
+  font-family:'Space Grotesk',sans-serif;font-size:.9rem;letter-spacing:.04em;
+  color:var(--texto);text-decoration:none;padding:8px 16px;border-radius:999px;
+  border:1px solid transparent;transition:.3s;
+}
+nav a:hover{
+  background:linear-gradient(135deg,var(--roxo-5),var(--lilas));
+  box-shadow:0 0 18px rgba(199,125,255,.6);transform:translateY(-2px);
+}
+
+
+
+.dropdown{position:relative}
+.drop-btn{
+  font-family:'Space Grotesk',sans-serif;font-size:.9rem;letter-spacing:.04em;
+  color:var(--texto);background:none;cursor:pointer;padding:8px 16px;border-radius:999px;
+  border:1px solid transparent;transition:.3s;
+}
+.drop-btn:hover,.dropdown.aberto .drop-btn{
+  background:linear-gradient(135deg,var(--roxo-5),var(--lilas));
+  box-shadow:0 0 18px rgba(199,125,255,.6);
+}
+.seta{display:inline-block;font-size:.75rem;transition:.3s}
+.dropdown.aberto .seta{transform:rotate(180deg)}
+.drop-lista{
+  display:none;position:absolute;top:calc(100% + 10px);right:0;min-width:320px;
+  background:rgba(26,9,51,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(199,125,255,.35);border-radius:16px;padding:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+.dropdown.aberto .drop-lista{display:block}
+.drop-lista a{display:block;border-radius:10px;padding:10px 14px;font-size:.85rem;white-space:normal}
+@media(max-width:640px){
+  .drop-btn{padding:7px 10px;font-size:.78rem}
+  .drop-lista{position:fixed;top:56px;left:4vw;right:4vw;min-width:0}
+}
+
+
+
+.logo .l-ini{display:none}
+.logo{cursor:pointer;transition:.3s}
+.logo:hover{text-shadow:0 0 16px rgba(255,158,229,.8)}
+.autor-fundo{
+  position:fixed;inset:0;z-index:60;background:rgba(10,0,25,.55);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;
+}
+.autor-fundo.aberto{opacity:1;visibility:visible}
+.autor-painel{
+  position:fixed;top:0;left:0;bottom:0;z-index:70;width:min(380px,90vw);
+  padding:34px 28px;overflow-y:auto;
+  background:linear-gradient(160deg,rgba(45,10,82,.97),rgba(26,9,51,.97) 60%,rgba(16,0,43,.98));
+  border-right:1px solid rgba(224,170,255,.35);
+  box-shadow:12px 0 50px rgba(0,0,0,.5),0 0 40px rgba(199,125,255,.25);
+  transform:translateX(-105%);transition:transform .5s cubic-bezier(.22,.8,.3,1);
+}
+.autor-painel.aberto{transform:translateX(0)}
+.autor-painel::before{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  top:-90px;right:-110px;background:radial-gradient(circle,rgba(255,158,229,.28),transparent 70%);
+  pointer-events:none;
+}
+.autor-fechar{
+  position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;
+  background:rgba(20,0,45,.5);border:1px solid rgba(224,170,255,.35);
+  color:var(--texto);font-size:1.1rem;cursor:pointer;transition:.3s;
+}
+.autor-fechar:hover{background:linear-gradient(135deg,var(--roxo-5),var(--lilas));box-shadow:0 0 18px rgba(199,125,255,.6);transform:rotate(90deg)}
+.autor-topo{text-align:center;margin:26px 0 28px;position:relative}
+.autor-avatar{
+  width:96px;height:96px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:2.2rem;color:#fff;
+  background:linear-gradient(135deg,var(--roxo-5),var(--lilas) 60%,var(--brilho));
+  box-shadow:0 0 0 4px rgba(224,170,255,.22),0 0 30px rgba(255,158,229,.55);
+}
+.autor-etq{
+  display:block;font-family:'Space Grotesk',sans-serif;font-size:.78rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--brilho);margin-bottom:6px;
+}
+.autor-topo h2{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--lavanda);line-height:1.2}
+.autor-linha{width:70px;height:3px;border-radius:3px;margin:16px auto 0;background:linear-gradient(90deg,var(--roxo-5),var(--brilho))}
+.autor-lista{list-style:none;position:relative}
+.autor-lista li{
+  background:rgba(20,0,45,.42);border:1px solid rgba(224,170,255,.28);
+  border-left:5px solid var(--brilho);border-radius:16px;
+  padding:16px 20px;margin:16px 0;word-break:break-word;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);transition:.35s;
+  opacity:0;transform:translateX(-20px);
+}
+.autor-painel.aberto .autor-lista li{opacity:1;transform:none}
+.autor-painel.aberto .autor-lista li:nth-child(1){transition-delay:.25s}
+.autor-painel.aberto .autor-lista li:nth-child(2){transition-delay:.35s}
+.autor-painel.aberto .autor-lista li:nth-child(3){transition-delay:.45s}
+.autor-painel.aberto .autor-lista li:hover{transform:translateX(8px);background:rgba(20,0,45,.55);border-left-color:var(--lilas);transition-delay:0s}
+.autor-lista .rotulo{
+  display:block;font-family:'Space Grotesk',sans-serif;font-size:.74rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--suave);margin-bottom:4px;
+}
+.autor-lista .valor{font-family:'Outfit',sans-serif;font-size:1.05rem;color:var(--texto);line-height:1.5}
+.autor-lista a.valor{color:var(--lavanda);text-decoration:none;border-bottom:1px dashed rgba(224,170,255,.5)}
+.autor-lista a.valor:hover{color:var(--brilho)}
+
+
+section{position:relative;padding:110px 8vw 90px;overflow:hidden}
+section::before{
+  content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(199,125,255,.28),transparent 70%);
+  top:-120px;right:-100px;pointer-events:none;
+}
+.container{max-width:920px;margin:0 auto;position:relative;z-index:1}
+
+
+#inicio{min-height:100vh;display:flex;align-items:center;text-align:center}
+section::before{display:none}
+@keyframes fluir{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+
+.etiqueta{
+  display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:.8rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--brilho);
+  border:1px solid var(--brilho);padding:6px 18px;border-radius:999px;margin-bottom:26px;
+}
+h1{
+  font-family:'Playfair Display',serif;font-weight:800;line-height:1.1;
+  font-size:clamp(2.4rem,7vw,4.8rem);
+  background:linear-gradient(90deg,#fff,var(--lavanda),var(--brilho));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:22px;
+}
+.sub{font-size:1.2rem;color:var(--suave);max-width:640px;margin:0 auto 34px}
+.autor{font-family:'Space Grotesk',sans-serif;color:var(--lavanda);letter-spacing:.08em}
+.botao{
+  display:inline-block;margin-top:34px;padding:14px 34px;border-radius:999px;
+  font-family:'Space Grotesk',sans-serif;font-weight:500;text-decoration:none;color:#fff;
+  background:linear-gradient(135deg,var(--roxo-5),var(--brilho));
+  box-shadow:0 8px 28px rgba(199,125,255,.45);transition:.3s;
+}
+.botao:hover{transform:translateY(-4px) scale(1.04)}
+
+
+.num{
+  font-family:'Space Grotesk',sans-serif;font-size:.95rem;letter-spacing:.3em;
+  color:var(--brilho);display:block;margin-bottom:6px;
+}
+h2{
+  font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4.5vw,3rem);
+  color:var(--lavanda);margin-bottom:12px;
+}
+h2::after{
+  content:"";display:block;width:90px;height:4px;border-radius:4px;margin-top:12px;
+  background:linear-gradient(90deg,var(--brilho),var(--lilas));
+}
+h3{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;
+  color:var(--brilho);margin:40px 0 4px;
+}
+.intro{color:var(--suave);margin-bottom:28px}
+
+
+.paragrafo{
+  background:rgba(20,0,45,.42);border:1px solid rgba(224,170,255,.28);
+  border-left:5px solid var(--brilho);border-radius:16px;
+  padding:26px 28px 20px;margin:24px 0;
+  backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(0,0,0,.25);
+  transition:.35s;
+}
+.paragrafo:hover{transform:translateX(8px);background:rgba(20,0,45,.55);border-left-color:var(--lilas)}
+.paragrafo p{margin-bottom:16px;text-align:justify}
+.fonte{
+  display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:.82rem;
+  letter-spacing:.05em;color:#2d0a52;background:linear-gradient(90deg,var(--lavanda),var(--brilho));
+  padding:4px 14px;border-radius:999px;font-weight:500;
+}
+.fonte::before{content:"Fonte: "}
+.destaque{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1.25rem;
+  color:var(--lavanda);text-align:center;margin:36px auto;max-width:700px;
+}
+
+
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:20px}
+.curio{
+  background:rgba(20,0,45,.42);border:1px solid rgba(224,170,255,.28);
+  border-radius:20px;padding:26px 24px 22px;text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(6px);transition:.35s;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+.curio:hover{transform:translateY(-8px) rotate(-1deg);border-color:var(--brilho);box-shadow:0 14px 36px rgba(255,158,229,.3)}
+.curio p{font-size:.98rem;line-height:1.65}
+.dado{
+  font-family:'Playfair Display',serif;font-weight:800;font-size:2.4rem;line-height:1.1;
+  background:linear-gradient(90deg,var(--lavanda),var(--brilho));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.curio .fonte{margin-top:auto}
+.centro{text-align:center;margin-top:30px}
+
+
+ul.refs{list-style:none}
+ul.refs li{
+  position:relative;
+  background:rgba(20,0,45,.42);border:1px solid rgba(224,170,255,.28);
+  border-radius:14px;padding:18px 22px 18px 52px;margin:16px 0;
+  font-size:.95rem;color:#e6d4f7;word-break:break-word;
+}
+ul.refs li::before{
+  content:"";position:absolute;left:20px;top:26px;
+  width:14px;height:14px;border-radius:50%;
+  background:linear-gradient(135deg,var(--roxo-5),var(--brilho));
+  box-shadow:0 0 10px var(--brilho),0 0 22px rgba(255,158,229,.7);
+}
+ul.refs a{color:var(--lavanda)}
+footer{zdsssaaaaaaaaaaaaaaaq      
+  text-align:center;padding:30px 5vw;background:#10002b;color:var(--suave);
+  font-family:'Space Grotesk',sans-serif;font-size:.85rem;
+}
+
+
+@media(max-width:640px){
+  header{padding:10px 4vw}
+  .logo .l-full{display:none}
+  .logo .l-ini{display:inline}
+  .logo{font-size:1.15rem}
+  nav a{padding:7px 10px;font-size:.78rem}
+  section{padding:100px 6vw 70px}
+  .paragrafo{padding:20px}
+  .paragrafo p{text-align:left}
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#autor" id="abrir-autor" aria-controls="painel-autor" aria-expanded="false"><span class="l-full">Bruno<span>  </span>Espindola</span><span class="l-ini">B<span>.</span>E</span></a>
+  <nav>
+    <a href="#inicio">Página Inicial</a>
+    <div class="dropdown">
+      <button type="button" class="drop-btn" aria-haspopup="true" aria-expanded="false">Informações <span class="seta">▾</span></button>
+      <div class="drop-lista">
+        <a href="#topico-2-1">2.1 Saúde mental</a>
+        <a href="#topico-2-2">2.2 Relação entre exercício físico e saúde mental</a>
+        <a href="#topico-2-3">2.3 Benefícios psicológicos do treinamento físico</a>
+        <a href="#topico-2-4">2.4 Tipos de treinamento e seus efeitos</a>
+        <a href="#topico-2-4-1">2.4.1 Treinamento aeróbico</a>
+        <a href="#topico-2-4-2">2.4.2 Treinamento resistido e musculação</a>
+        <a href="#topico-2-5">2.5 Exercícios funcionais e atividades coletivas</a>
+      </div>
+    </div>
+    <a href="#curiosidades">Curiosidades</a>
+    <a href="#referencias">Referências</a>
+  </nav>
+</header>
+
+<div class="autor-fundo" id="autor-fundo"></div>
+<aside class="autor-painel" id="painel-autor" aria-label="Sobre o autor" aria-hidden="true">
+  <button type="button" class="autor-fechar" id="fechar-autor" aria-label="Fechar">✕</button>
+  <div class="autor-topo">
+    <div class="autor-avatar">BE</div>
+    <span class="autor-etq">Sobre o autor</span>
+    <h2>Bruno Espindola</h2>
+    <div class="autor-linha"></div>
+  </div>
+  <ul class="autor-lista">
+    <li><span class="rotulo">Nome</span><span class="valor">Bruno Espindola Habowski</span></li>
+    <li><span class="rotulo">Idade</span><span class="valor">18 anos</span></li>
+    <li><span class="rotulo">Contato para dúvidas</span><a class="valor" href="mailto:brunohabowskiespindola@gmail.com">brunohabowskiespindola@gmail.com</a></li>
+  </ul>
+</aside>
+
+
+<section id="inicio">
+  <div class="container">
+    <span class="etiqueta">Trabalho de Conclusão de Curso</span>
+    <h1>O Impacto do Treinamento Físico na Saúde Mental</h1>
+    <p class="sub">Como o exercício regular fortalece o corpo, equilibra as emoções e melhora a qualidade de vida.</p>
+    <p class="autor"></p>
+    <p class="autor">
+    <a class="botao" href="#informacoes">Começar a ler ↓</a>
+  </div>
+</section>
+
+
+<section id="informacoes" class="s1">
+  <div class="container">
+    <span class="num">02 · FUNDAMENTAÇÃO TEÓRICA</span>
+    <h2>Informações</h2>
+    <p class="intro">Cada bloco abaixo traz o conteúdo da pesquisa, com o autor responsável indicado na etiqueta roxa.</p>
+
+    <h3 id="topico-2-1">2.1 Saúde mental</h3>
+
+    <div class="paragrafo">
+      <p>A saúde mental é um estado de total bem-estar físico, mental e social, e não apenas a ausência de doenças ou enfermidades. Esse conceito está diretamente relacionado à garantia dos direitos sociais, que devem ser assegurados de maneira igualitária a todos, sem distinção de raça, religião, ideologia política ou condição socioeconômica.</p>
+      <span class="fonte">Sabin (2024)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A saúde mental é uma temática de grande relevância na sociedade contemporânea. Embora tenha havido avanços nas discussões sobre o tema, ainda persistem desafios relacionados à sua promoção e prevenção.</p>
+      <span class="fonte">Silva (2024)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A saúde mental não deve ser compreendida apenas como a ausência de transtornos mentais: ela envolve aspectos biológicos, psicológicos, sociais, culturais e políticos. Por isso, sua promoção exige ações interdisciplinares voltadas à garantia da cidadania, da inclusão social e do acesso aos serviços de saúde, contribuindo para o desenvolvimento integral dos indivíduos.</p>
+      <span class="fonte">Amarante (2007)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A saúde mental está diretamente relacionada às condições de vida da população, sendo influenciada por fatores como trabalho, educação, moradia, vínculos familiares e participação social.</p>
+      <span class="fonte">Lancetti e Amarante (2006)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Diversos estudos demonstram que a prática regular de exercícios físicos contribui para a redução dos sintomas de depressão, ansiedade e estresse, favorecendo o equilíbrio emocional e a qualidade de vida.</p>
+      <span class="fonte">Sabin (2024)</span>
+    </div>
+  </div>
+</section>
+
+<section class="s2">
+  <div class="container">
+    <h3 id="topico-2-2">2.2 Relação entre exercício físico e saúde mental</h3>
+
+    <div class="paragrafo">
+      <p>O treinamento físico consiste em um processo organizado com o objetivo de aprimorar a aptidão física, a saúde e o desempenho motor. Geralmente envolve atividades que aumentam a capacidade cardiovascular e fortalecem a musculatura. Além disso, tanto exercícios aeróbicos quanto anaeróbicos promovem melhorias significativas na saúde físico-funcional de mulheres na menopausa.</p>
+      <span class="fonte">Raquel (2025)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A prática regular de exercícios ajuda a reduzir o estresse ao estimular substâncias ligadas ao bem-estar, promovendo relaxamento, melhora do humor e mais autoconfiança, além de diminuir sintomas de ansiedade e favorecer um sono melhor. Quando realizados em grupo, os exercícios também fortalecem o convívio social, reduzem o isolamento e contribuem para o equilíbrio emocional.</p>
+      <span class="fonte">Sabin (2024)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A prática frequente de exercícios, principalmente os de caráter aeróbico, é bastante eficaz no controle da ansiedade, pois contribui para a liberação de neurotransmissores como endorfina e serotonina, fundamentais para o equilíbrio do humor e a diminuição do estresse. Também está associada a benefícios para a saúde psicológica e para o padrão de sono.</p>
+      <span class="fonte">Costa e Costa (2024)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A prática regular de exercícios físicos não só melhora o bem-estar geral, como atua diretamente na prevenção e na redução de sintomas de condições como depressão, ansiedade e síndrome de burnout.</p>
+      <span class="fonte">Matsudo et al. (2000)</span>
+    </div>
+
+    <p class="destaque">“A atividade física é uma das formas mais acessíveis e eficazes de fortalecer a saúde mental: um investimento em equilíbrio, qualidade de vida e longevidade emocional.”<br><small>— ideia apresentada por Sabin (2024)</small></p>
+  </div>
+</section>
+
+<section class="s3">
+  <div class="container">
+    <h3 id="topico-2-3">2.3 Benefícios psicológicos do treinamento físico</h3>
+
+    <div class="paragrafo">
+      <p>A atividade física contribui com diversos aspectos, entre eles a melhora cognitiva da autoestima. Ela provoca alterações biológicas no corpo, como a liberação de neurotransmissores (serotonina, dopamina e noradrenalina), a diminuição da inflamação e a melhora do sistema imunológico, além do aumento no funcionamento do sistema nervoso central.</p>
+      <span class="fonte">Campos (2023)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Do ponto de vista fisiológico, o treinamento físico exerce influência direta sobre o funcionamento do cérebro. Durante os exercícios ocorre a liberação de hormônios e neurotransmissores, como endorfina, serotonina, dopamina e adrenalina, que auxiliam na redução dos níveis de estresse e ansiedade.</p>
+      <span class="fonte">Costa; Costa (2024)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Evidências científicas mostram que a prática de exercícios pode melhorar o bem-estar e a saúde mental, além de ajudar na prevenção e na redução dos sintomas de depressão, ansiedade e transtorno bipolar. Na depressão, por exemplo, cerca de 90 minutos de exercícios por semana já podem contribuir para a redução dos sintomas, o equivalente a 30 minutos, três vezes por semana.</p>
+      <span class="fonte">Campos (2023)</span>
+    </div>
+  </div>
+</section>
+
+<section class="s4">
+  <div class="container">
+    <h3 id="topico-2-4">2.4 Tipos de treinamento e seus efeitos</h3>
+
+    <div class="paragrafo">
+      <p>O treinamento físico desempenha um papel importante na promoção da saúde, na prevenção de doenças e na melhora da qualidade de vida, atuando por meio de diferentes modalidades que geram adaptações biológicas específicas.</p>
+      <span class="fonte">Schoenfeld (2021)</span>
+    </div>
+
+    <h3 id="topico-2-4-1">2.4.1 Treinamento aeróbico</h3>
+
+    <div class="paragrafo">
+      <p>O exercício aeróbico contribui para a elevação do consumo máximo de oxigênio (VO₂ máx), indicador diretamente relacionado à diminuição do percentual de gordura corporal. Além de melhorar o condicionamento cardiorrespiratório, é uma alternativa bastante eficiente para o emagrecimento, pois aumenta o gasto calórico e favorece a utilização de lipídios como fonte de energia.</p>
+      <span class="fonte">Oda et al. (2014)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Ao elaborar um programa de redução de peso, variáveis como intensidade e duração do exercício costumam ser ajustadas. O treinamento aeróbico moderado por cerca de 150 minutos semanais pode contribuir para a melhora de fatores de risco da síndrome metabólica, incluindo composição corporal, resistência à insulina e níveis de hemoglobina glicada.</p>
+      <span class="fonte">O’hagan et al. (2013)</span>
+    </div>
+
+    <h3 id="topico-2-4-2">2.4.2 Treinamento resistido e musculação</h3>
+
+    <div class="paragrafo">
+      <p>O treinamento resistido proporciona diversos benefícios, como a redução da dor lombar e dos sintomas da artrite, além da melhora da capacidade funcional, do controle motor e da velocidade da caminhada. Estudos indicam que também contribui para o controle da glicemia e da insulina, sendo recomendado na prevenção e no tratamento do diabetes tipo 2.</p>
+      <span class="fonte">Strasser et al. (2010)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>O treinamento resistido contribui para a saúde cardiovascular, auxiliando no controle da pressão arterial, na melhora dos níveis de lipídios no sangue e no funcionamento dos vasos sanguíneos. Essa modalidade também favorece o aumento da densidade mineral óssea, sendo eficaz para adultos de diversas faixas etárias.</p>
+      <span class="fonte">Banz et al. (2003)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A autoestima depende das atitudes individuais das pessoas, sejam elas positivas ou negativas. Autoestima e autoimagem dependem uma da outra e mudam de acordo com as novas experiências de vida. Sentir-se merecedor, confiante e competente é fundamental para uma vida de qualidade.</p>
+      <span class="fonte">Lopes e Benedetti (2004)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Com o envelhecimento, os homens tendem a priorizar os aspectos funcionais do corpo, enquanto as mulheres tendem a focar na estética, o que contribui para uma percepção de autoimagem inferior entre a população feminina nessa fase.</p>
+      <span class="fonte">Matsuo et al. (2007)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Essa diferença de perspectiva também se reflete na prática de exercícios: 32,4% dos homens idosos atribuem pouca relevância à autoimagem como ganho da atividade física, enquanto 61% das mulheres idosas a classificam como um benefício de extrema importância.</p>
+      <span class="fonte">Freitas et al. (2007)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>A musculação atende tanto às necessidades funcionais quanto estéticas de homens e mulheres, além de aumentar a massa muscular, proteger a densidade óssea e melhorar a postura e a autonomia diária.</p>
+      <span class="fonte">Schoenfeld (2021)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>O ganho de força e as mudanças corporais fortalecem a autoimagem e a autoestima, tornando a prática essencial para a saúde física e mental, sobretudo no envelhecimento.</p>
+      <span class="fonte">Oda et al. (2014)</span>
+    </div>
+  </div>
+</section>
+
+<section class="s5">
+  <div class="container">
+    <h3 id="topico-2-5">2.5 Exercícios funcionais e atividades coletivas</h3>
+
+    <div class="paragrafo">
+      <p>O treinamento funcional é fundamental para conservar e aprimorar as capacidades funcionais, físicas e de saúde em idosos, levando ao aperfeiçoamento e ao restabelecimento das capacidades funcionais diárias.</p>
+      <span class="fonte">Guioti et al. (2022)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>O treinamento funcional atua como uma excelente terapia complementar para idosos com doenças crônicas, promovendo melhorias nos parâmetros hemodinâmicos e no controle metabólico.</p>
+      <span class="fonte">Carneiro et al. (2022)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>Por meio de exercícios integrados que envolvem as atividades diárias, essa modalidade estimula adaptações fisiológicas que otimizam a circulação sanguínea, reduzem a resistência vascular e potencializam a captação de glicose.</p>
+      <span class="fonte">Rodrigues et al. (2023)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>É importante a prática regular de atividade física pela população idosa com diabetes, pois há evidências de que ela contribui para o controle da doença e para a promoção de melhores condições de saúde.</p>
+      <span class="fonte">Carneiro et al. (2022)</span>
+    </div>
+
+    <div class="paragrafo">
+      <p>O exercício físico, incluindo as modalidades funcionais, é um recurso importante para favorecer a manutenção da funcionalidade e da qualidade de vida das pessoas idosas.</p>
+      <span class="fonte">Rodrigues et al. (2023)</span>
+    </div>
+  </div>
+</section>
+
+<section id="curiosidades">
+  <div class="container">
+    <span class="num">VOCÊ SABIA?</span>
+    <h2>Curiosidades</h2>
+    <p class="intro">Alguns números e fatos curiosos que aparecem na pesquisa sobre exercício e saúde mental.</p>
+
+    <div class="grade">
+      <div class="curio">
+        <span class="dado">90 min</span>
+        <p>Por semana já podem ajudar a reduzir os sintomas de depressão, o equivalente a 30 minutos, três vezes por semana.</p>
+        <span class="fonte">Campos (2023)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">150 min</span>
+        <p>De treinamento aeróbico moderado por semana podem melhorar fatores de risco da síndrome metabólica.</p>
+        <span class="fonte">O’hagan et al. (2013)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">61%</span>
+        <p>das mulheres idosas consideram a autoimagem um benefício de extrema importância do exercício, contra 32,4% dos homens idosos que lhe dão pouca relevância.</p>
+        <span class="fonte">Freitas et al. (2007)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Endorfina</span>
+        <p>e serotonina são neurotransmissores liberados durante o exercício aeróbico e ajudam no equilíbrio do humor e na diminuição do estresse.</p>
+        <span class="fonte">Costa e Costa (2024)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Em grupo</span>
+        <p>Treinar com outras pessoas fortalece o convívio social, reduz o isolamento e contribui para o equilíbrio emocional.</p>
+        <span class="fonte">Sabin (2024)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Sono</span>
+        <p>A prática regular de exercícios favorece um sono melhor, além de diminuir sintomas de ansiedade.</p>
+        <span class="fonte">Sabin (2024)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Imunidade</span>
+        <p>A atividade física libera serotonina, dopamina e noradrenalina, diminui a inflamação e melhora o sistema imunológico.</p>
+        <span class="fonte">Campos (2023)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Ossos fortes</span>
+        <p>O treinamento resistido favorece o aumento da densidade mineral óssea e é eficaz para adultos de diversas faixas etárias.</p>
+        <span class="fonte">Banz et al. (2003)</span>
+      </div>
+      <div class="curio">
+        <span class="dado">Burnout</span>
+        <p>Os exercícios atuam na prevenção e na redução de sintomas de depressão, ansiedade e síndrome de burnout.</p>
+        <span class="fonte">Matsudo et al. (2000)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="referencias">
+  <div class="container">
+    <span class="num">REFERÊNCIAS BIBLIOGRÁFICAS</span>
+    <h2>Referências</h2>
+    <p class="intro">Fontes utilizadas na fundamentação teórica deste trabalho.</p>
+
+    <ul class="refs">
+      <li>CUNHA, Raquel Maria de Jesus Souza. Análise fisiofuncional: efeitos do exercício aeróbico e anaeróbico na melhoria de parâmetros fisiológicos e funcionais no climatério e menopausa. <em>Revista Ibero-Americana de Humanidades, Ciências e Educação</em>, v. 11, n. 12, p. 1438-1455, 2025. Acesso em: 16 maio 2026.</li>
+      <li>SILVA, Carollinny Ramilly de Moura. <em>Níveis de ansiedade, depressão e estresse entre praticantes e não praticantes de exercício físico</em>. 2024. 46 f. Monografia (Licenciatura em Educação Física) – Universidade Estadual do Piauí, Picos, 2024. Acesso em: 16 maio 2026.</li>
+      <li>DE BARROS, Manuela. <em>Brazilian Journal of Implantology and Health Sciences</em>, Macapá-Amapá, 2024. Acesso em: 22 abr. 2026.</li>
+      <li>COSTA, Luana Kallyne Santos; COSTA, Macário Peixoto Loureiro. <em>Associação entre atividade física, sono e esgotamento mental</em>. 2024. Acesso em: 29 abr. 2026.</li>
+      <li>SABIN. <em>Entenda a relação entre atividade física e saúde mental</em>. 2024. Acesso em: 6 maio 2026.</li>
+      <li>ODA, Kanae et al. Relationship between peak oxygen uptake and regional body composition in Japanese subjects. <em>Journal of Sport and Health Science</em>, v. 3, n. 3, p. 233-238, 2014. Acesso em: 13 maio 2026.</li>
+      <li>O’HAGAN, Ciara; DE VITO, Giuseppe; BOREHAM, Colin AG. Exercise prescription in the treatment of type 2 diabetes mellitus. <em>Sports Medicine</em>, v. 43, n. 1, p. 39-49, 2013. Acesso em: 13 maio 2026.</li>
+      <li>FILHO, Mauro; FERREIRA, Rodrigo; CESAR, Eurico. <em>Os benefícios do treinamento de força na autonomia funcional do indivíduo idoso</em>. Revista de Educação Física. Acesso em: 20 maio 2026.</li>
+      <li>STRASSER, Barbara; SIEBERT, Uwe; SCHOBERSBERGER, Wolfgang. Resistance training in the treatment of the metabolic syndrome. <em>Sports Medicine</em>, v. 40, n. 5, p. 397-415, 2010. Acesso em: 20 maio 2026.</li>
+      <li>MATSUDO, Sandra Mahecha; MATSUDO, Victor Keihan Rodrigues; BARROS NETO, Turíbio Leite. Atividade física e envelhecimento: aspectos epidemiológicos. <em>Revista Brasileira de Medicina do Esporte</em>, São Paulo, v. 7, n. 1, p. 2-13, 2001. DOI: 10.1590/S1517-86922001000100002. Acesso em: 27 maio 2026.</li>
+      <li>DA CUNHA, Renan. UNESC. Acesso em: 23 jul. 2026.</li>
+      <li>ZORZETTO, Lucas. UNESP, 2013. Acesso em: 26 set. 2026.</li>
+      <li>SCHOENFELD, Brad. <em>Raciocínio científico para a hipertrofia muscular</em>. 1. ed. São Paulo: Manole, 2021.</li>
+    </ul>
+
+    <div class="centro"><a class="botao" href="#inicio">↑ Voltar ao início</a></div>
+  </div>
+</section>
+
+<footer>
+  Bruno Espindola · TCC · E. E. E. M. Profª. Maria Rocha · Santa Maria, RS · 2026
+</footer>
+
+<script>
+(function(){
+  var dd=document.querySelector('.dropdown'),btn=dd.querySelector('.drop-btn');
+  function set(o){dd.classList.toggle('aberto',o);btn.setAttribute('aria-expanded',o)}
+  btn.addEventListener('click',function(e){e.stopPropagation();set(!dd.classList.contains('aberto'))});
+  dd.querySelectorAll('.drop-lista a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  document.addEventListener('click',function(e){if(!dd.contains(e.target))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>
+(function(){
+  var logo=document.getElementById('abrir-autor'),painel=document.getElementById('painel-autor'),
+      fundo=document.getElementById('autor-fundo'),fechar=document.getElementById('fechar-autor');
+  function set(o){
+    painel.classList.toggle('aberto',o);fundo.classList.toggle('aberto',o);
+    painel.setAttribute('aria-hidden',!o);logo.setAttribute('aria-expanded',o);
+  }
+  logo.addEventListener('click',function(e){e.preventDefault();set(!painel.classList.contains('aberto'))});
+  fechar.addEventListener('click',function(){set(false)});
+  fundo.addEventListener('click',function(){set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+</body>
+</html>
